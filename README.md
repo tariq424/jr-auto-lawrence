@@ -13,3 +13,9 @@ Edit it right here on GitHub (pencil icon), commit, then download the new ZIP
 Slider fix (2026-10-27): the before/after pair is now the same car in identical
 framing (dull/scuffed before, glossy after). The original pair was two unrelated
 stock photos (a motorcycle and a different car at a harbor).
+
+Paint fix (2026-10-27): the color swatches originally changed only the caption
+text — no code ever recolored the car, so only blue (the photo's own color)
+looked right. Each swatch now swaps the repaired-car image for a recolored
+version of the same photo (paint pixels only): Radiant Red, Obsidian Gray,
+Pearl White, and Deep Blue (the original). Recolors are embedded in index.html.
