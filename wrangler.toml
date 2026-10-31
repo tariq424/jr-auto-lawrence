@@ -1,0 +1,17 @@
+# JR Auto Repair & Bodyshop — Cloudflare Pages project config.
+# Full walkthrough: see BACKEND-SETUP.md in this repo.
+#
+# IMPORTANT: before the next deploy, either
+#   (a) paste the real D1 database_id below (after creating the "jr-leads"
+#       database once in the Cloudflare dashboard), or
+#   (b) delete the [[d1_databases]] block and bind the database in the
+#       dashboard instead (Pages project -> Settings -> Bindings).
+# Deploying with the placeholder id still in place can fail the build.
+
+name = "jr-auto-lawrence"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "jr-leads"
+database_id = "70e060fc-7562-4e39-b66a-7519437a7792"

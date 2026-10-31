@@ -122,6 +122,56 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #dc2626;
     }
+
+    /* 3D Business Card */
+    .bizcard-scene {
+      perspective: 1400px;
+      -webkit-perspective: 1400px;
+    }
+    .bizcard {
+      position: relative;
+      width: 100%;
+      max-width: 580px;
+      aspect-ratio: 7 / 4;
+      margin-inline: auto;
+      transform-style: preserve-3d;
+      transition: transform 0.65s cubic-bezier(0.4, 0.1, 0.2, 1);
+      cursor: pointer;
+      outline: none;
+      font-size: clamp(7px, 2.1vw, 14px);
+      font-family: 'Inter', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+    }
+    .bizcard:focus-visible {
+      box-shadow: 0 0 0 3px #dc2626;
+      border-radius: 14px;
+    }
+    .bizcard-face {
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      overflow: hidden;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.4);
+    }
+    .bizcard-back {
+      transform: rotateY(180deg);
+    }
+    .bizcard-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5em;
+      padding: 0.55em 1em;
+      border-radius: 9999px;
+      font-weight: 800;
+      font-size: 0.92em;
+      color: #ffffff;
+      text-decoration: none;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .bizcard { transition: none; }
+    }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col selection:bg-racing-600 selection:text-white">
@@ -283,6 +333,61 @@
         </div>
       </div>
 
+      <!-- 3D Business Card Showcase -->
+      <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <h3 class="text-sm font-black uppercase tracking-wider text-white flex items-center gap-2">
+            <i class="fa-solid fa-id-card text-racing-500"></i>
+            <span data-i18n="bizcard_title">Our Business Card</span>
+          </h3>
+          <span class="text-[11px] text-slate-400 flex items-center gap-1.5">
+            <i class="fa-solid fa-rotate"></i>
+            <span data-i18n="bizcard_hint">Tap or click the card to flip it</span>
+          </span>
+        </div>
+        <div class="bizcard-scene">
+          <div id="bizCard" class="bizcard" role="button" tabindex="0" aria-label="JR Auto Repair and Autobody business card. Activate to flip it over.">
+            <!-- FRONT (recreation of Joaquin's printed card) -->
+            <div class="bizcard-face bizcard-front" style="background: linear-gradient(115deg, #fafafa 0%, #e7e5e4 55%, #d6d3d1 100%);">
+              <div style="position:absolute; inset:0; background: linear-gradient(160deg, #ef4444, #b91c1c 60%, #991b1b); clip-path: polygon(41% 0, 75% 0, 65% 100%, 31% 100%);"></div>
+              <div style="position:absolute; inset:0; background: #111111; clip-path: polygon(75% 0, 100% 0, 100% 100%, 65% 100%);"></div>
+              <!-- Left: JR monogram -->
+              <div style="position:absolute; left:4%; top:7%; width:33%;">
+                <div style="font-weight:900; line-height:0.85; letter-spacing:-0.04em; font-size:5em;"><span style="color:#dc2626;">J</span><span style="color:#111111; margin-left:-0.1em;">R</span></div>
+                <div style="font-weight:800; color:#dc2626; font-size:1em; line-height:1.1; text-transform:uppercase; margin-top:0.35em;">Auto Repair<br>&amp; Autobody</div>
+              </div>
+              <div data-i18n="card_open_days" style="position:absolute; left:4%; bottom:7%; background:#111111; color:#ffffff; padding:0.35em 0.7em; font-weight:700; font-size:0.74em; text-transform:uppercase; letter-spacing:0.03em;">Open Monday thru Saturday</div>
+              <!-- Middle: car + services -->
+              <div style="position:absolute; left:34.5%; top:5%; width:31.5%; text-align:center;">
+                <div style="font-size:2.4em; line-height:1; color:#450a0a;"><i class="fa-solid fa-car-side"></i></div>
+                <p data-i18n="card_services" style="font-style:italic; font-weight:700; font-size:0.7em; line-height:1.5; color:#fef3c7; text-shadow:0 1px 2px rgba(0,0,0,0.45); margin-top:0.5em;">General Auto Repair • Auto Electric • Mechanic Computerized Diagnosis • American &amp; Imported Vehicles • Dent Removal &amp; Painting • Chassis Alignment</p>
+              </div>
+              <!-- Right: contact strip -->
+              <div style="position:absolute; right:3%; top:8%; width:24.5%; color:#ffffff; font-size:0.7em; line-height:1.55;">
+                <div style="word-break:break-all; line-height:1.35;">joaquinrosa30@yahoo.com</div>
+                <div style="margin-top:0.5em;"><span data-i18n="card_main">Main</span>: 978-975-2700</div>
+                <div><span data-i18n="card_cell">Cell</span>: 978-390-1337</div>
+                <div style="margin-top:0.9em;"><span data-i18n="card_owner">Owner</span>: Joaquin Rosa<br>7 Winter st.<br>Lawrence, MA 01841</div>
+              </div>
+            </div>
+            <!-- BACK -->
+            <div class="bizcard-face bizcard-back" style="background: linear-gradient(150deg, #1c1917, #0c0a09 70%); color:#ffffff;">
+              <div style="position:absolute; top:0; left:0; right:0; height:0.55em; background:#dc2626;"></div>
+              <div style="position:relative; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:5% 7%; gap:0.5em;">
+                <div style="font-weight:900; font-size:1.45em; letter-spacing:0.02em; text-transform:uppercase;">JR <span style="color:#ef4444;">Auto Repair</span> &amp; Autobody</div>
+                <div style="font-size:0.95em; color:#e7e5e4;"><span data-i18n="card_back_hours_lbl">Hours</span>: <span data-i18n="card_hours_line">Mon-Sat: 9:00 AM - 5:00 PM</span> • <span data-i18n="card_sunday_line">Sunday: Closed</span></div>
+                <div style="font-size:0.95em; color:#e7e5e4;">7 Winter St, Lawrence, MA 01841 • joaquinrosa30@yahoo.com</div>
+                <div style="display:flex; gap:0.7em; margin-top:0.5em; flex-wrap:wrap; justify-content:center;">
+                  <a href="tel:9789752700" class="bizcard-action" style="background:#dc2626;"><i class="fa-solid fa-phone"></i><span data-i18n="card_call">Call the Shop</span>: (978) 975-2700</a>
+                  <a href="https://wa.me/19783901337" target="_blank" rel="noopener" class="bizcard-action" style="background:#16a34a;"><i class="fa-brands fa-whatsapp"></i><span data-i18n="card_whatsapp">WhatsApp</span>: (978) 390-1337</a>
+                </div>
+                <div data-i18n="card_flip_hint" style="font-size:0.74em; color:#a8a29e;">Tap to flip back</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Quick Department Feature Cards -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <!-- Card 1: Collision & Paint -->
@@ -349,6 +454,38 @@
           </div>
         </div>
       </div>
+      <!-- Contact / Message Form -->
+      <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl">
+        <h3 class="text-sm font-black uppercase tracking-wider text-white flex items-center gap-2">
+          <i class="fa-solid fa-envelope text-racing-500"></i>
+          <span data-i18n="contact_title">Send Us a Message</span>
+        </h3>
+        <p class="text-xs text-slate-400 mt-1.5" data-i18n="contact_sub">Leave your name, phone number and a message — Joaquín or the team will get back to you.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+          <div>
+            <label for="contactName" class="block text-[11px] font-semibold text-slate-400 mb-1" data-i18n="lbl_name">Customer Name</label>
+            <input id="contactName" type="text" placeholder="e.g. Carlos Rodriguez" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:border-racing-500 focus:outline-none">
+          </div>
+          <div>
+            <label for="contactPhone" class="block text-[11px] font-semibold text-slate-400 mb-1" data-i18n="lbl_phone">Phone Number</label>
+            <input id="contactPhone" type="tel" placeholder="(978) 555-0143" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:border-racing-500 focus:outline-none">
+          </div>
+        </div>
+        <div class="mt-3">
+          <label for="contactMessage" class="block text-[11px] font-semibold text-slate-400 mb-1" data-i18n="lbl_message">Message</label>
+          <textarea id="contactMessage" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:border-racing-500 focus:outline-none"></textarea>
+        </div>
+        <p id="contactErrorMsg" class="hidden mt-3 text-xs font-semibold text-red-400" data-i18n="form_error">Please enter your name and a valid phone number.</p>
+        <button id="contactSendBtn" type="button" class="mt-4 px-5 py-2.5 rounded-xl bg-racing-600 hover:bg-racing-700 text-white font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-racing-600/30 flex items-center gap-2">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span data-i18n="btn_send_message">Send Message</span>
+        </button>
+        <p id="contactSentMsg" class="hidden mt-3 text-xs font-semibold text-emerald-400 items-center gap-1.5">
+          <i class="fa-solid fa-circle-check"></i>
+          <span data-i18n="contact_sent">Message received — thank you! We will get back to you soon.</span>
+        </p>
+      </div>
+
     </section>
 
     <!-- ========================================== -->
@@ -682,6 +819,7 @@
                 <i class="fa-solid fa-calendar-check"></i>
                 <span data-i18n="btn_confirm_booking">Confirm &amp; Generate RO Code</span>
               </button>
+                <p id="bookingErrorMsg" class="hidden text-xs font-semibold text-red-400" data-i18n="form_error">Please enter your name and a valid phone number.</p>
             </div>
           </div>
 
@@ -1289,7 +1427,28 @@
         foot_overview: "Overview",
         foot_collision: "Collision",
         foot_quotes: "Estimates",
-        foot_ivr: "IVR Hotline"
+        foot_ivr: "IVR Hotline",
+        bizcard_title: "Our Business Card",
+        bizcard_hint: "Tap or click the card to flip it",
+        card_services: "General Auto Repair • Auto Electric • Mechanic Computerized Diagnosis • American & Imported Vehicles • Dent Removal & Painting • Chassis Alignment",
+        card_open_days: "Open Monday thru Saturday",
+        card_main: "Main",
+        card_cell: "Cell",
+        card_owner: "Owner",
+        card_back_hours_lbl: "Hours",
+        card_hours_line: "Mon-Sat: 9:00 AM - 5:00 PM",
+        card_sunday_line: "Sunday: Closed",
+        card_call: "Call the Shop",
+        card_whatsapp: "WhatsApp",
+        card_flip_hint: "Tap to flip back",
+        contact_title: "Send Us a Message",
+        contact_sub: "Leave your name, phone number and a message — Joaquín or the team will get back to you.",
+        lbl_message: "Message",
+        btn_send_message: "Send Message",
+        contact_sent: "Message received — thank you! We will get back to you soon.",
+        form_error: "Please enter your name and a valid phone number.",
+        chat_phone_saved: "Thanks! I saved your number and Joaquín will call you back during shop hours (Mon-Sat 9 AM - 5 PM). Anything else about your vehicle?"
+
       },
       es: {
         top_hours: "Lun-Sáb: 9:00 AM - 5:00 PM",
@@ -1425,7 +1584,28 @@
         foot_overview: "Inicio",
         foot_collision: "Chapa y Choques",
         foot_quotes: "Cotizaciones",
-        foot_ivr: "Línea IVR"
+        foot_ivr: "Línea IVR",
+        bizcard_title: "Nuestra Tarjeta de Presentación",
+        bizcard_hint: "Toque o haga clic en la tarjeta para voltearla",
+        card_services: "Reparación General de Autos • Electricidad Automotriz • Diagnóstico Computarizado por Mecánico • Vehículos Americanos e Importados • Enderezada y Pintura • Alineación de Chasis",
+        card_open_days: "Abierto de Lunes a Sábado",
+        card_main: "Tel.",
+        card_cell: "Cel.",
+        card_owner: "Propietario",
+        card_back_hours_lbl: "Horario",
+        card_hours_line: "Lun-Sáb: 9:00 AM - 5:00 PM",
+        card_sunday_line: "Domingo: Cerrado",
+        card_call: "Llamar al Taller",
+        card_whatsapp: "WhatsApp",
+        card_flip_hint: "Toque para voltear",
+        contact_title: "Envíenos un Mensaje",
+        contact_sub: "Deje su nombre, número de teléfono y un mensaje — Joaquín o el equipo se comunicará con usted.",
+        lbl_message: "Mensaje",
+        btn_send_message: "Enviar Mensaje",
+        contact_sent: "Mensaje recibido — ¡gracias! Nos comunicaremos con usted pronto.",
+        form_error: "Por favor ingrese su nombre y un número de teléfono válido.",
+        chat_phone_saved: "¡Gracias! Guardé su número y Joaquín le devolverá la llamada en horario del taller (lun-sáb 9 AM - 5 PM). ¿Algo más sobre su vehículo?"
+
       }
     };
 
@@ -1925,6 +2105,85 @@
     }
 
     // ==========================================
+    // 8B. LEAD CAPTURE & 3D BUSINESS CARD
+    // ==========================================
+    // Posts a lead to the backend API. Fully defensive: if the backend is
+    // not live yet (no /api/lead route or no DB bound), the call fails
+    // silently and the visitor experience is unchanged.
+    function submitLead(payload) {
+      try {
+        const body = Object.assign({}, payload, { lang: currentLang });
+        return fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        }).then(function (r) {
+          return r.json().catch(function () { return { ok: false }; });
+        }).catch(function () {
+          return { ok: false, stored: false };
+        });
+      } catch (e) {
+        return Promise.resolve({ ok: false, stored: false });
+      }
+    }
+
+    function leadPhoneDigits(text) {
+      return (text || '').replace(/\D/g, '');
+    }
+
+    function isValidLeadContact(name, phone) {
+      return !!(name && name.trim()) && leadPhoneDigits(phone).length >= 7;
+    }
+
+    const CHAT_PHONE_RE = /(?:\+?1[\s.\-]?)?(?:\(?\d{3}\)?[\s.\-]?)?\d{3}[\s.\-]?\d{4}/;
+
+    // Interactive 3D recreation of Joaquin's printed business card:
+    // tilts with the pointer, flips on tap/click/keyboard.
+    function initBizCard() {
+      const card = document.getElementById('bizCard');
+      if (!card) return;
+      let flipped = false;
+      let tiltX = 0;
+      let tiltY = 0;
+      const reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+      function render() {
+        const baseY = flipped ? 180 : 0;
+        card.style.transform = 'rotateX(' + tiltX + 'deg) rotateY(' + (baseY + tiltY) + 'deg)';
+        card.classList.toggle('is-flipped', flipped);
+      }
+
+      card.addEventListener('pointermove', function (e) {
+        if (reduced || e.pointerType === 'touch') return;
+        const rect = card.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+        const px = (e.clientX - rect.left) / rect.width;
+        const py = (e.clientY - rect.top) / rect.height;
+        tiltY = (px - 0.5) * 16;
+        tiltX = (0.5 - py) * 12;
+        render();
+      });
+      card.addEventListener('pointerleave', function () {
+        tiltX = 0;
+        tiltY = 0;
+        render();
+      });
+      card.addEventListener('click', function (e) {
+        if (e.target && e.target.closest && e.target.closest('a')) return;
+        flipped = !flipped;
+        render();
+      });
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          flipped = !flipped;
+          render();
+        }
+      });
+      render();
+    }
+
+    // ==========================================
     // 9. INITIALIZATION & EVENT ATTACHMENT
     // ==========================================
     document.addEventListener('DOMContentLoaded', () => {
@@ -2004,13 +2263,47 @@
       });
       updateEstimates();
 
-      // Booking Confirmation
+      // Booking Confirmation (+ lead capture to backend)
       document.getElementById('reserveBookingBtn')?.addEventListener('click', () => {
+        const nameEl = document.getElementById('custName');
+        const phoneEl = document.getElementById('custPhone');
+        const errEl = document.getElementById('bookingErrorMsg');
+        const nameVal = nameEl?.value || '';
+        const phoneVal = phoneEl?.value || '';
+
+        if (nameEl) nameEl.classList.toggle('border-red-500', !nameVal.trim());
+        if (phoneEl) phoneEl.classList.toggle('border-red-500', leadPhoneDigits(phoneVal).length < 7);
+        if (!isValidLeadContact(nameVal, phoneVal)) {
+          if (errEl) errEl.classList.remove('hidden');
+          return;
+        }
+        if (errEl) errEl.classList.add('hidden');
+
+        // Store the booking as a lead (silent no-op if backend is not live)
+        const services = [];
+        document.querySelectorAll('.service-check:checked').forEach(cb => {
+          const nm = cb.getAttribute('data-name');
+          if (nm) services.push(nm);
+        });
+        const vehicle = [
+          document.getElementById('carYear')?.value,
+          document.getElementById('carMake')?.value,
+          document.getElementById('carModel')?.value
+        ].filter(Boolean).join(' ').trim();
+        const dVal = document.getElementById('bookDate')?.value || 'Oct 17';
+        const tVal = document.getElementById('bookTime')?.value || '10:00 AM';
+        submitLead({
+          type: 'booking',
+          name: nameVal.trim(),
+          phone: phoneVal.trim(),
+          vehicle: vehicle,
+          services: services,
+          message: 'Preferred slot: ' + dVal + ' at ' + tVal
+        });
+
         const card = document.getElementById('bookingConfirmationCard');
         const codeEl = document.getElementById('confOrderCode');
         const dtEl = document.getElementById('confDateTime');
-        const dVal = document.getElementById('bookDate')?.value || 'Oct 17';
-        const tVal = document.getElementById('bookTime')?.value || '10:00 AM';
 
         const randNum = Math.floor(1000 + Math.random() * 9000);
         if (codeEl) codeEl.textContent = '#JR-' + randNum;
@@ -2060,7 +2353,15 @@
 
         // Simulate typing delay
         setTimeout(() => {
-          const reply = generateAdvisorReply(text);
+          let reply;
+          const phoneMatch = text.match(CHAT_PHONE_RE);
+          if (phoneMatch) {
+            // Visitor left a phone number: save it as a lead for a callback
+            submitLead({ type: 'chat', phone: phoneMatch[0], message: text });
+            reply = i18n[currentLang].chat_phone_saved;
+          } else {
+            reply = generateAdvisorReply(text);
+          }
           appendChatMessage('ai', reply);
           if (soundEnabled) speakText(reply);
         }, 450);
@@ -2106,6 +2407,37 @@
           displayRepairOrder(ro);
         });
       });
+
+      // Contact / Message Form (+ lead capture to backend)
+      document.getElementById('contactSendBtn')?.addEventListener('click', () => {
+        const nameEl = document.getElementById('contactName');
+        const phoneEl = document.getElementById('contactPhone');
+        const msgEl = document.getElementById('contactMessage');
+        const errEl = document.getElementById('contactErrorMsg');
+        const sentEl = document.getElementById('contactSentMsg');
+        const nameVal = nameEl?.value || '';
+        const phoneVal = phoneEl?.value || '';
+
+        if (nameEl) nameEl.classList.toggle('border-red-500', !nameVal.trim());
+        if (phoneEl) phoneEl.classList.toggle('border-red-500', leadPhoneDigits(phoneVal).length < 7);
+        if (!isValidLeadContact(nameVal, phoneVal)) {
+          if (errEl) errEl.classList.remove('hidden');
+          if (sentEl) { sentEl.classList.add('hidden'); sentEl.classList.remove('flex'); }
+          return;
+        }
+        if (errEl) errEl.classList.add('hidden');
+        submitLead({
+          type: 'form',
+          name: nameVal.trim(),
+          phone: phoneVal.trim(),
+          message: (msgEl?.value || '').trim()
+        });
+        if (sentEl) { sentEl.classList.remove('hidden'); sentEl.classList.add('flex'); }
+        if (msgEl) msgEl.value = '';
+      });
+
+      // 3D Business Card
+      initBizCard();
 
       // Initial RO display
       displayRepairOrder('1042');
